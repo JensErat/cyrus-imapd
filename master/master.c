@@ -2463,17 +2463,15 @@ int main(int argc, char **argv)
 	     * calls get accounted for*/
 	    gettimeofday(&now, 0);
 	    tvptr = NULL;
+	    tv.tv_sec = 0;
+	    tv.tv_usec = 0;
 	    if (schedule && !in_shutdown) {
 		double delay = timesub(&now, &schedule->mark);
 		if (!interrupted && delay > 0.0) {
 		    timeval_set_double(&tv, delay);
 		}
-		else {
-		    tv.tv_sec = 0;
-		    tv.tv_usec = 0;
-		}
-		tvptr = &tv;
 	    }
+	    tvptr = &tv;
 
 #if defined(HAVE_UCDSNMP) || defined(HAVE_NETSNMP)
 	    if (tvptr == NULL) blockp = 1;
